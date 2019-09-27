@@ -29,8 +29,9 @@ type InRequestVersion struct {
 }
 
 type InParams struct {
-	Unpack       bool `json:"unpack"`
-	SkipDownload bool `json:"skip_download"`
+	Unpack         bool       `json:"unpack"`
+	SkipDownload   bool       `json:"skip_download"`
+	InitialVersion *time.Time `json:"initial_version,omitempty"`
 }
 
 type OutParams struct {

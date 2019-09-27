@@ -26,7 +26,7 @@ func NewCheck(azureClient azureClient) Check {
 	return Check{azureClient: azureClient}
 }
 
-func (c Check) VersionsSince(filename string, snapshot time.Time) ([]Version, error) {
+func (c Check) VersionsSince(filename string, snapshot time.Time, initialVersion *time.Time) ([]Version, error) {
 	blobListResponse, err := c.azureClient.ListBlobs(storage.ListBlobsParameters{
 		Prefix: filename,
 		Include: &storage.IncludeBlobDataset{
@@ -56,6 +56,13 @@ func (c Check) VersionsSince(filename string, snapshot time.Time) ([]Version, er
 	}
 
 	if !found {
+		if initialVersion != nil {
+			return []Version{
+				{
+					Snapshot: initialVersion,
+				},
+			}, nil
+		}
 		return []Version{}, fmt.Errorf("failed to find blob: %s", filename)
 	}
 
