@@ -1,4 +1,4 @@
-module github.com/pivotal-cf/azure-blobstore-resource
+module github.com/pivotal-jleung/azure-blobstore-resource
 
 go 1.12
 

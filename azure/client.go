@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/url"
 	"os"
 	"time"
@@ -34,6 +35,7 @@ func NewClient(baseURL, storageAccountName, storageAccountKey, container string)
 }
 
 func (c Client) ListBlobs(params storage.ListBlobsParameters) (storage.BlobListResponse, error) {
+	log.Printf("*** Storage API Version: %v", storage.DefaultAPIVersion)
 	client, err := storage.NewClient(c.storageAccountName, c.storageAccountKey, c.baseURL, storage.DefaultAPIVersion, true)
 	if err != nil {
 		return storage.BlobListResponse{}, err
@@ -46,6 +48,7 @@ func (c Client) ListBlobs(params storage.ListBlobsParameters) (storage.BlobListR
 }
 
 func (c Client) GetBlobSizeInBytes(blobName string, snapshot time.Time) (int64, error) {
+	log.Printf("*** Storage API Version: %v", storage.DefaultAPIVersion)
 	client, err := storage.NewClient(c.storageAccountName, c.storageAccountKey, c.baseURL, storage.DefaultAPIVersion, true)
 	if err != nil {
 		return 0, err
@@ -81,6 +84,7 @@ func (c Client) GetBlobSizeInBytes(blobName string, snapshot time.Time) (int64, 
 }
 
 func (c Client) Get(blobName string, snapshot time.Time) ([]byte, error) {
+	log.Printf("*** Storage API Version: %v", storage.DefaultAPIVersion)
 	client, err := storage.NewClient(c.storageAccountName, c.storageAccountKey, c.baseURL, storage.DefaultAPIVersion, true)
 	if err != nil {
 		return []byte{}, err
